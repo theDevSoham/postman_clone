@@ -74,7 +74,7 @@ const RequestBlock = ({onRequestComplete}) => {
       params: query,
       headers: headers,
     }).then(response => {
-      typeof onRequestComplete === 'function' && onRequestComplete(response.data, true);
+      typeof onRequestComplete === 'function' && onRequestComplete(response, true);
     }).catch(error => {
       console.log(error);
       typeof onRequestComplete === 'function' && onRequestComplete(error, true);

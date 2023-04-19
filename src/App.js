@@ -18,7 +18,7 @@ function App() {
       <Container width="100vw">
         <RequestBlock onRequestComplete={getData} />
       </Container>
-      <Container>
+      <Container mx={0}>
         {true && <ResponseBlock data={data} />}
       </Container>
     </Container>
