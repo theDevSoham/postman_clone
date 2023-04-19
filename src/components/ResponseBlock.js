@@ -16,20 +16,16 @@ import RespBody from "./RespBody";
 const ResponseBlock = ({ data }) => {
   const [response, setResponse] = React.useState({});
   const [headers, setHeaders] = React.useState({});
-  //const [body, setBody] = React.useState({});
+  const [body, setBody] = React.useState([]);
   const [size, setSize] = React.useState(0);
 
   React.useEffect(() => {
     if (typeof data === "object") {
       setResponse(data);
-    } else {
-      setResponse({});
-    }
+    } 
   }, [data]);
 
   React.useEffect(() => {
-
-    console.log(response);
 
     if (typeof response.headers !== "undefined" && typeof response.headers === "object") {
       setHeaders(response.headers);
@@ -37,6 +33,7 @@ const ResponseBlock = ({ data }) => {
 
     if(typeof response.headers !== "undefined" && typeof response.data !== "undefined") {
       setSize(JSON.stringify(response.data).length + JSON.stringify(response.headers).length);
+      setBody(response.data);
     }
   }, [response]);
 
@@ -81,7 +78,7 @@ const ResponseBlock = ({ data }) => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <RespBody />
+              <RespBody body={body} />
             </TabPanel>
             <TabPanel>
               <RespHeaders headers={headers} />

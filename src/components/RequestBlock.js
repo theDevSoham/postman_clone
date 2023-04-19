@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import QueryParams from "./QueryParams";
 import axios from "axios";
+import JSONEditor from "./JSONEditor";
 
 const options = [
   {
@@ -51,6 +52,7 @@ const RequestBlock = ({onRequestComplete}) => {
   const [url, setUrl] = React.useState("");
   const [query, setQuery] = React.useState([]);
   const [headers, setHeaders] = React.useState([]);
+  const [body, setBody] = React.useState("");
 
   const getParams = (params) => {
     setQuery(params);
@@ -60,11 +62,22 @@ const RequestBlock = ({onRequestComplete}) => {
     setHeaders(headers);
   };
 
-  const sendRequest = () => {
-    console.log(method, url, query, headers);
+  const getBody = (body) => {
+    setBody(body);
+  };
 
+  const sendRequest = () => {
     if(url === "" || query.length === 0 || headers.length === 0) {
       alert("Please fill all the fields");
+      return;
+    }
+
+    let data = null;
+
+    try {
+      data = JSON.parse(body || null);
+    } catch (error) {
+      alert("Please enter valid JSON");
       return;
     }
 
@@ -73,6 +86,7 @@ const RequestBlock = ({onRequestComplete}) => {
       method: method,
       params: query,
       headers: headers,
+      data: data,
     }).then(response => {
       typeof onRequestComplete === 'function' && onRequestComplete(response, true);
     }).catch(error => {
@@ -124,7 +138,7 @@ const RequestBlock = ({onRequestComplete}) => {
               <QueryParams onUpdate={getHeaders} />
             </TabPanel>
             <TabPanel>
-              <p>three!</p>
+              <JSONEditor onUpdate={getBody} />
             </TabPanel>
           </TabPanels>
         </Tabs>

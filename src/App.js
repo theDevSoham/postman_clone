@@ -5,7 +5,7 @@ import { Container } from "@chakra-ui/react";
 
 function App() {
 
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState({});
   const [requested, setRequested] = React.useState(false);
 
   const getData = (data, isRequested) => {
