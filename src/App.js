@@ -1,17 +1,17 @@
 import RequestBlock from "./components/RequestBlock";
 import ResponseBlock from './components/ResponseBlock';
-import classes from './App.module.css';
+import { Container } from "@chakra-ui/react";
 
 function App() {
   return (
-    <div className="App">
-      <div className={classes["request-block-cont"]}>
+    <Container width="100vw">
+      <Container width="100vw">
         <RequestBlock />
-      </div>
-      <div className={classes["response-block-cont"]}>
+      </Container>
+      <Container>
         <ResponseBlock />
-      </div>
-    </div>
+      </Container>
+    </Container>
   );
 }
 
