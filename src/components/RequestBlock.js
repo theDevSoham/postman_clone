@@ -11,6 +11,7 @@ import {
   Tabs,
 } from "@chakra-ui/react";
 import QueryParams from "./QueryParams";
+import axios from "axios";
 
 const options = [
   {
@@ -45,7 +46,7 @@ const MappedOptions = () => {
   );
 };
 
-const RequestBlock = () => {
+const RequestBlock = ({onRequestComplete}) => {
   const [method, setMethod] = React.useState(options[0].value);
   const [url, setUrl] = React.useState("");
   const [query, setQuery] = React.useState([]);
@@ -61,6 +62,23 @@ const RequestBlock = () => {
 
   const sendRequest = () => {
     console.log(method, url, query, headers);
+
+    if(url === "" || query.length === 0 || headers.length === 0) {
+      alert("Please fill all the fields");
+      return;
+    }
+
+    axios({
+      url: url,
+      method: method,
+      params: query,
+      headers: headers,
+    }).then(response => {
+      typeof onRequestComplete === 'function' && onRequestComplete(response.data, true);
+    }).catch(error => {
+      console.log(error);
+      typeof onRequestComplete === 'function' && onRequestComplete(error, true);
+    });
   };
 
   return (
